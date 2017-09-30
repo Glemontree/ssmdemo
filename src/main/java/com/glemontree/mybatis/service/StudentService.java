@@ -16,4 +16,12 @@ public class StudentService {
     public Student getStudentById(Integer id) {
         return studentMapper.getStudentById(id);
     }
+
+    public Student getStudentByName(String name) {
+        return studentMapper.getStudentByName(name);
+    }
+
+    public void insert(Student student) {
+        studentMapper.insert(student);
+    }
 }

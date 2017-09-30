@@ -35,6 +35,13 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.3.10.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:4.3.11.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.3.10.RELEASE" />
+          <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.1.32" />
+          <element id="library" level="project" name="Maven: org.apache.shiro:shiro-core:1.2.2" />
+          <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.8.3" />
+          <element id="library" level="project" name="Maven: org.apache.shiro:shiro-web:1.2.2" />
+          <element id="library" level="project" name="Maven: org.apache.shiro:shiro-spring:1.2.2" />
+          <element id="library" level="project" name="Maven: org.apache.shiro:shiro-ehcache:1.2.2" />
+          <element id="library" level="project" name="Maven: net.sf.ehcache:ehcache-core:2.5.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">

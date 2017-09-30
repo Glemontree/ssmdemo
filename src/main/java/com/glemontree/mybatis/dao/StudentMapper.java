@@ -14,5 +14,7 @@ public interface StudentMapper {
     public Student getStudentByStudentId(String studentId);
     
     public List<Student> getStudentsByClazz(Clazz clazz);
+
+    public void insert(Student student);
     
 }

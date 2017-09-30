@@ -3,7 +3,35 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.glemontree.mybatis.dao.StudentMapper">
+	
+	<!--<resultMap id="baseResultMap" type="com.glemontree.mybatis.bean.Student">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="password" property="password"/>
+		<result column="sex" property="sex"/>
+		<result column="student_id" property="studentId"/>
+		<association property="clazz" javaType="com.glemontree.mybatis.bean.Clazz">
+			<id
+		</association>
+	</resultMap>-->
+	
 	<select id="getStudentById" resultType="com.glemontree.mybatis.bean.Student">
 		select * from student where id = #{id}
 	</select>
+	
+	<select id="getStudentByName" resultType="com.glemontree.mybatis.bean.Student">
+		SELECT * FROM  student WHERE name LIKE #{name}
+	</select>
+	
+	<insert id="insert" parameterType="com.glemontree.mybatis.bean.Student">
+		INSERT into student (id, name, password, sex, student_id, clazz_id)
+		VALUES (
+			#{id},
+			#{name},
+			#{password},
+			#{sex},
+			#{studentId},
+			#{clazz.id}
+		)
+	</insert>
 </mapper>

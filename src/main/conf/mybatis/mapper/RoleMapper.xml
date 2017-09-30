@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glemontree.mybatis.dao.RoleMapper">
+	
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		DELETE FROM role WHERE id = #{id}
+	</delete>
+	
+	<insert id="insert" parameterType="com.glemontree.mybatis.bean.Role">
+		INSERT INTO role (id, role_name, role_sign, description)
+		VALUES (
+			#{id},
+			#{roleName},
+			#{roleSign},
+			#{description}
+		)
+	</insert>
+	
+	<select id="selectById" resultType="com.glemontree.mybatis.bean.Role">
+		SELECT * FROM role WHERE id = #{id}
+	</select>
+	
+	<update id="updateById" parameterType="com.glemontree.mybatis.bean.Role">
+		UPDATE role
+		SET role_name = #{roleName},
+			role_sign = #{role_sign},
+			description = #{description}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

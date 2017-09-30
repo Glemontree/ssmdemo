@@ -24,11 +24,6 @@ public class Student {
      */
     private Clazz clazz;
 
-    /**
-     * 班主任
-     */
-    private Teacher teacher;
-
     public Integer getId() {
         return id;
     }
@@ -77,11 +72,35 @@ public class Student {
         this.clazz = clazz;
     }
 
-    public Teacher getTeacher() {
-        return teacher;
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", sex='" + sex + '\'' +
+                ", studentId='" + studentId + '\'' +
+                '}';
     }
 
-    public void setTeacher(Teacher teacher) {
-        this.teacher = teacher;
+    public Student(Integer id, String name, String password, String sex, String studentId) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.sex = sex;
+        this.studentId = studentId;
+    }
+
+    public Student(Integer id, String name, String password, String sex, String studentId, Clazz clazz) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.sex = sex;
+        this.studentId = studentId;
+        this.clazz = clazz;
+    }
+
+    public Student() {
+
     }
 }

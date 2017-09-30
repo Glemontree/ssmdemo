@@ -63,4 +63,13 @@ public class Clazz {
                 ", students=" + students +
                 '}';
     }
+
+    public Clazz(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Clazz() {
+
+    }
 }
