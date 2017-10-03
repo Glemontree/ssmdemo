@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<description>apache shiro配置</description>
+	
+	<bean id="shiroAuthorizingRealm" class="com.glemontree.mybatis.shiro.ShiroAuthorizingRealm">
+		<!--<property name="authorizationCacheName" value="shiro-authorizationCache"/>-->
+	</bean>
+	
+	<!-- 安全管理器 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="shiroAuthorizingRealm"/>
+		<property name="cacheManager" ref="shiroEhcacheManager"/>
+	</bean>
+	
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!--Shiro的核心安全接口，这个属性是必须的-->
+		<property name="securityManager" ref="securityManager" />
+		<!--身份认证失败，则跳转到登录页面的配置-->
+		<property name="loginUrl" value="/login.jsp" />
+		<!--权限认证失败，则跳转到指定页面-->
+		<property name="unauthorizedUrl" value="/401.jsp" />
+		
+		<property name="filterChainDefinitions">
+			<value>
+				<!-- 登录页允许访问 -->
+				/WEB-INF/pages/index.jsp=anon
+				/WEB-INF/static/**=anon
+				/WEB-INF/pages/success.jsp=anon
+				/WEB-INF/pages/fail.jsp=anon
+				/login=anon
+				
+				<!--需要权限为add的用户才能访问此请求-->
+				/user/admin*=authc
+				/user=perms[user:add]
+				
+				<!--需要管理员角色才能访问此页面-->
+				/user/add=roles[admin]
+				
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
+	</bean>
+	
+	<!-- 会话DAO -->
+	<bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/>
+	
+	<!-- 会话管理器 -->
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<property name="sessionDAO" ref="sessionDAO"/>
+	</bean>
+	
+	<!-- Shiro生命周期处理器 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+</beans>

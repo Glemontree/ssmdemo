@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glemontree.mybatis.dao.PermissionMapper">
+	
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		DELETE FROM permission WHERE id = #{id}
+	</delete>
+	
+	<insert id="insert" parameterType="com.glemontree.mybatis.bean.Permission">
+		INSERT INTO permission (id, permission_name, permission_sign, description)
+		VALUES (
+			#{id},
+			#{permissionName},
+			#{permissionSign},
+			#{description}
+		)
+	</insert>
+	
+	<select id="selectById" resultType="com.glemontree.mybatis.bean.Permission">
+		SELECT * FROM permission WHERE id = #{id}
+	</select>
+	
+	<update id="updateById" parameterType="com.glemontree.mybatis.bean.Role">
+		UPDATE permission
+		SET permission_name = #{permissionName},
+			permission_sign = #{permissionSign},
+			description = #{description}
+		WHERE id = #{id}
+	</update>
+	
+	<select id="selectPermissionsByRoleId" resultType="com.glemontree.mybatis.bean.Permission">
+		select p.* FROM permission p LEFT JOIN role_permission rp ON rp.permission_id = p.id
+		WHERE rp.role_id = #{role_id}
+	</select>
+	
+</mapper>
