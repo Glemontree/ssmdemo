@@ -100,6 +100,11 @@ public class Student {
         this.clazz = clazz;
     }
 
+    public Student(String name,String password) {
+        this.name = name;
+        this.password = password;
+    }
+
     public Student() {
 
     }

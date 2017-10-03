@@ -24,4 +24,8 @@ public class StudentService {
     public void insert(Student student) {
         studentMapper.insert(student);
     }
+
+    public Student authentication(Student student) {
+        return studentMapper.authentication(student);
+    }
 }

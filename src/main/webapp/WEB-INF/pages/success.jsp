@@ -19,5 +19,9 @@
     <br><br>
     <a href="selectPermission?id=2">select permission</a>
     <br><br>
+    <a href="logout">Logout</a>
+    <br><br>
+    <a href="user/add">user add</a>
+    <br><br>
 </body>
 </html>

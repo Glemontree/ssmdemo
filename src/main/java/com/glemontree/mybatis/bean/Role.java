@@ -4,7 +4,7 @@ package com.glemontree.mybatis.bean;
  * 角色
  */
 public class Role {
-    private Long id;
+    private int id;
 
     /**
      * 角色名
@@ -21,11 +21,11 @@ public class Role {
      */
     private String description;
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

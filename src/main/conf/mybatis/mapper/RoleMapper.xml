@@ -30,4 +30,14 @@
 		WHERE id = #{id}
 	</update>
 	
+	<select id="selectRolesByStudentId" resultType="com.glemontree.mybatis.bean.Role">
+		SELECT r.* FROM role r LEFT JOIN student_role sr ON r.id = sr.role_id
+		WHERE sr.student_id = #{id}
+	</select>
+	
+	<select id="selectRolesByTeacherId" resultType="com.glemontree.mybatis.bean.Role">
+		SELECT r.* FROM role r LEFT JOIN teacher_role tr ON r.id = tr.role_id
+		WHERE tr.teacher_id = #{id}
+	</select>
+	
 </mapper>

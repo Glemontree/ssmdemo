@@ -5,6 +5,8 @@ import com.glemontree.mybatis.dao.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoleService {
 
@@ -25,5 +27,13 @@ public class RoleService {
 
     public int updateById(Role role) {
         return roleMapper.updateById(role);
+    }
+
+    public List<Role> selectRolesByStudentId(Integer id) {
+        return roleMapper.selectRolesByStudentId(id);
+    }
+
+    public List<Role> selectRolesByTeacherId(Integer id) {
+        return roleMapper.selectRolesByTeacherId(id);
     }
 }

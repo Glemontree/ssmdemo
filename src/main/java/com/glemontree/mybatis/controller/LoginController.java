@@ -1,6 +1,5 @@
 package com.glemontree.mybatis.controller;
 
-import com.glemontree.mybatis.bean.Clazz;
 import com.glemontree.mybatis.bean.Student;
 import com.glemontree.mybatis.service.StudentService;
 import org.apache.shiro.SecurityUtils;
@@ -11,8 +10,9 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class LoginController {
@@ -21,8 +21,8 @@ public class LoginController {
     private StudentService studentService;
 
     @RequestMapping("/login")
-    public String login(Student student, Model model) {
-        String info = loginUser(student);
+    public String login(Student student, HttpServletRequest request) {
+        /*String info = loginUser(student);
         if (!"SUCC".equals(info)) {
             model.addAttribute("failMsg", "用户不存在或密码错误");
             return "fail";
@@ -30,6 +30,18 @@ public class LoginController {
             model.addAttribute("successMsg", "登录成功");
             model.addAttribute("name", student.getName());
             return "success";
+        }*/
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(student.getName(), student.getPassword());
+        try {
+            subject.login(token);
+            request.getSession().setAttribute("student", student);
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.getSession().setAttribute("student", student);
+            request.setAttribute("error", "用户名或密码错误");
+            return "/login.jsp";
         }
     }
 
@@ -62,6 +74,27 @@ public class LoginController {
             return true;
         }
         return false;
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        /*request.getSession().invalidate();*/
+        return "/login.jsp";
+    }
+
+    @RequestMapping("/admin")
+    public String admin(HttpServletRequest request) {
+        return "success";
+    }
+
+    @RequestMapping("/student")
+    public String student(HttpServletRequest request) {
+        return "success";
+    }
+
+    @RequestMapping("/teacher")
+    public String teacher(HttpServletRequest request) {
+        return "success";
     }
 
 }

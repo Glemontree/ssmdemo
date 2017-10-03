@@ -16,16 +16,29 @@
 	</bean>
 	
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!--Shiro的核心安全接口，这个属性是必须的-->
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/index.jsp" />
-		<property name="successUrl" value="/pages/success.jsp" />
-		<property name="unauthorizedUrl" value="/pages/401.jsp" />
+		<!--身份认证失败，则跳转到登录页面的配置-->
+		<property name="loginUrl" value="/login.jsp" />
+		<!--权限认证失败，则跳转到指定页面-->
+		<property name="unauthorizedUrl" value="/unauthorizd.jsp" />
+		
 		<property name="filterChainDefinitions">
 			<value>
 				<!-- 登录页允许访问 -->
-				/index.jsp=anon
-				/pages/success.jsp=anon
-				/pages/fail.jsp=anon
+				/WEB-INF/pages/index.jsp=anon
+				/WEB-INF/static/**=anon
+				/WEB-INF/pages/success.jsp=anon
+				/WEB-INF/pages/fail.jsp=anon
+				/login=anon
+				
+				<!--需要权限为add的用户才能访问此请求-->
+				/user/admin*=authc
+				/user=perms[user:add]
+				
+				<!--需要管理员角色才能访问此页面-->
+				/user/add=roles[admin]
+				
 			</value>
 		</property>
 	</bean>

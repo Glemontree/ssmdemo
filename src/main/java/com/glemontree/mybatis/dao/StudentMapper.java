@@ -16,5 +16,7 @@ public interface StudentMapper {
     public List<Student> getStudentsByClazz(Clazz clazz);
 
     public void insert(Student student);
+
+    public Student authentication(Student student);
     
 }

@@ -34,4 +34,12 @@
 			#{clazz.id}
 		)
 	</insert>
+	
+	<select id="authentication" resultType="com.glemontree.mybatis.bean.Student">
+		SELECT * FROM student WHERE name = #{name} AND password = #{password}
+	</select>
+	
+	<select id="getRoles" parameterType="String" resultType="String">
+		SELECT r.role_name from student s, role r WHERE s.
+	</select>
 </mapper>

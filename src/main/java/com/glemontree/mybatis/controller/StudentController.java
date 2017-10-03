@@ -30,4 +30,9 @@ public class StudentController {
         Student student = new Student(null, "wangwu", "1230", "male", "SX1301130", clazz);
         studentService.insert(student);
     }
+
+    @RequestMapping("/user/add")
+    public String userAdd() {
+        return "authorize";
+    }
 }
