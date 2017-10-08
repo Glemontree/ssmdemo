@@ -8,4 +8,8 @@
 		SELECT * FROM clazz WHERE id = #{id}
 	</select>
 	
+	<select id="getClazzByName" resultType="com.glemontree.mybatis.bean.Clazz">
+		SELECT * FROM clazz WHERE name = #{name}
+	</select>
+	
 </mapper>

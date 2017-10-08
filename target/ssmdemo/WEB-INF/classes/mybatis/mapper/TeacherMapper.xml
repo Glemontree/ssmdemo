@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.glemontree.mybatis.dao.TeacherMapper">
+	
+	<select id="getTeacherByName" resultType="com.glemontree.mybatis.bean.Teacher">
+		SELECT * FROM  teacher WHERE name LIKE #{name}
+	</select>
+	
+	<insert id="insert" parameterType="com.glemontree.mybatis.bean.Teacher">
+		INSERT into teacher (id, name, password, sex, job_no, title)
+		VALUES (
+			#{id},
+			#{name},
+			#{password},
+			#{sex},
+			#{jobNo},
+			#{title}
+		)
+	</insert>
+	
+</mapper>

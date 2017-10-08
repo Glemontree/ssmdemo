@@ -6,7 +6,16 @@
 	<description>apache shiro配置</description>
 	
 	<bean id="shiroAuthorizingRealm" class="com.glemontree.mybatis.shiro.ShiroAuthorizingRealm">
-		<!--<property name="authorizationCacheName" value="shiro-authorizationCache"/>-->
+		<property name="credentialsMatcher">
+			<bean class="com.glemontree.mybatis.shiro.RetryLimitHashedCredentialsMatcher">
+				<!-- 加密算法为MD5 -->
+				<property name="hashAlgorithmName" value="MD5"></property>
+				<!-- 加密次数 -->
+				<property name="hashIterations" value="2"></property>
+				<!--是否存储散列后的密码为16进制-->
+				<property name="storedCredentialsHexEncoded" value="true"/>
+			</bean>
+		</property>
 	</bean>
 	
 	<!-- 安全管理器 -->
@@ -21,7 +30,7 @@
 		<!--身份认证失败，则跳转到登录页面的配置-->
 		<property name="loginUrl" value="/login.jsp" />
 		<!--权限认证失败，则跳转到指定页面-->
-		<property name="unauthorizedUrl" value="/401.jsp" />
+		<property name="unauthorizedUrl" value="/unauthorizd.jsp" />
 		
 		<property name="filterChainDefinitions">
 			<value>
@@ -57,4 +66,5 @@
 	
 	<!-- Shiro生命周期处理器 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	
 </beans>

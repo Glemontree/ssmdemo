@@ -13,6 +13,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
     @Autowired
     private StudentService studentService;
 
-    /*@Autowired
-    private TeacherService teacherService;*/
+    @Autowired
+    private TeacherService teacherService;
 
     @Autowired
     private RoleService roleService;
@@ -36,12 +37,13 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
         String name = String.valueOf(principalCollection.getPrimaryPrincipal());
         Student student = null;
         Teacher teacher = null;
-        student = studentService.getStudentByName(name);
         List<Role> roleInfos = null;
-        if (student != null) {
+        if ((student = studentService.getStudentByName(name)) != null) {
             roleInfos = roleService.selectRolesByStudentId(student.getId());
-        } else {
+        } else if ((teacher = teacherService.getTeacherByName(name)) != null) {
             roleInfos = roleService.selectRolesByTeacherId(teacher.getId());
+        } else {
+            return null;
         }
         for (Role role : roleInfos) {
             System.out.println(role);
@@ -56,36 +58,45 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
     }
 
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        /*// 用户名
-        Student studentLogin = tokenToStudent((UsernamePasswordToken) authenticationToken);
-        SimpleAuthenticationInfo simpleAuthenticationInfo = null;
-        try {
-            Student student = studentService.getStudentByName(studentLogin.getName());
-            if (student == null) {
-                throw new UnknownAccountException(); // 没找到相关账号
-            }
-            simpleAuthenticationInfo = new SimpleAuthenticationInfo(
-                    authenticationToken.getPrincipal(),
-                    studentLogin.getPassword(),
-                    getName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return simpleAuthenticationInfo;*/
         String name = String.valueOf(authenticationToken.getPrincipal());
-        String password = new String((char[]) authenticationToken.getCredentials());
-        final Student student = studentService.authentication(new Student(name, password));
+        final Student student = studentService.getStudentByName(name);
         if (student == null) {
             throw new AuthenticationException("用户名或密码错误");
         }
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(name, password, getName());
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+                student.getName(),
+                student.getPassword(),
+                getName()
+        );
+        authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(student.getCredentialSalt()));
         return authenticationInfo;
     }
 
-    /*private Student tokenToStudent(UsernamePasswordToken usernamePasswordToken) {
-        Student student = new Student();
-        student.setName(usernamePasswordToken.getUsername());
-        student.setPassword(String.valueOf(usernamePasswordToken.getPassword()));
-        return student;
-    }*/
+    @Override
+    public void clearCachedAuthorizationInfo(PrincipalCollection principals) {
+        super.clearCachedAuthorizationInfo(principals);
+    }
+
+    @Override
+    public void clearCachedAuthenticationInfo(PrincipalCollection principals) {
+        super.clearCachedAuthenticationInfo(principals);
+    }
+
+    @Override
+    public void clearCache(PrincipalCollection principals) {
+        super.clearCache(principals);
+    }
+
+    public void clearAllCachedAuthorizationInfo() {
+        getAuthorizationCache().clear();
+    }
+
+    public void clearAllCachedAuthenticationInfo() {
+        getAuthenticationCache().clear();
+    }
+
+    public void clearAllCache() {
+        clearAllCachedAuthenticationInfo();
+        clearAllCachedAuthorizationInfo();
+    }
 }

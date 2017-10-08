@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class StudentController {
@@ -19,9 +20,10 @@ public class StudentController {
     ClazzService clazzService;
 
     @RequestMapping("/getStudentById")
-    public void getStudentById(@RequestParam(value = "id", required = false, defaultValue = "1") Integer id) {
+    @ResponseBody
+    public Student getStudentById(@RequestParam(value = "id", required = false, defaultValue = "1") Integer id) {
         Student student = studentService.getStudentById(2);
-        System.out.println(student);
+        return student;
     }
 
     @RequestMapping("/insertStudent")

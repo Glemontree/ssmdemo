@@ -8,5 +8,7 @@ import java.util.List;
 public interface ClazzMapper {
 	
     public Clazz getClazzById(Integer id);
+
+    public Clazz getClazzByName(String name);
     
 }

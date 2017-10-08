@@ -21,4 +21,23 @@
 	
 	<mvc:annotation-driven></mvc:annotation-driven>
 	<mvc:default-servlet-handler/>
+	
+	<!--转化json-->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<!--json视图拦截器，读取到@ResponseBody的时候去配置它-->
+				<ref bean="mappingJacksonHttpMessageConverter"/>
+			</list>
+		</property>
+	</bean>
+	
+	<!--json转化器，它可以将结果转化-->
+	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
 </beans>

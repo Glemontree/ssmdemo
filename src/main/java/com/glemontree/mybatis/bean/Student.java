@@ -2,16 +2,7 @@ package com.glemontree.mybatis.bean;
 
 import java.util.List;
 
-public class Student {
-
-    // 主键
-    private Integer id;
-
-    // 姓名
-    private String name;
-
-    // 密码
-    private String password;
+public class Student extends User {
 
     // 性别
     private String sex;
@@ -23,30 +14,6 @@ public class Student {
      * 所属班级
      */
     private Clazz clazz;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getSex() {
         return sex;
@@ -76,10 +43,11 @@ public class Student {
     public String toString() {
         return "Student{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
                 ", sex='" + sex + '\'' +
                 ", studentId='" + studentId + '\'' +
+                ", clazz=" + clazz +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 

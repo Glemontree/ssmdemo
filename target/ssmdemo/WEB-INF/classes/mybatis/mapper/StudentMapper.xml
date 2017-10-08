@@ -24,11 +24,12 @@
 	</select>
 	
 	<insert id="insert" parameterType="com.glemontree.mybatis.bean.Student">
-		INSERT into student (id, name, password, sex, student_id, clazz_id)
+		INSERT into student (id, name, password, salt, sex, student_id, clazz_id)
 		VALUES (
 			#{id},
 			#{name},
 			#{password},
+			#{salt},
 			#{sex},
 			#{studentId},
 			#{clazz.id}

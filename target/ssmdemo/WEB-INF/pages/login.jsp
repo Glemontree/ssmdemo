@@ -14,5 +14,9 @@
         <br><br>
         <input type="submit" value="submit"/>
     </form>
+    <br>
+    <a href="studentRegister">学生注册</a>
+    <br>
+    <a href="teacherRegister">老师注册</a>
 </body>
 </html>

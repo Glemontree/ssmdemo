@@ -14,4 +14,8 @@ public class ClazzService {
     public Clazz getClazzById(Integer id) {
         return clazzMapper.getClazzById(id);
     }
+
+    public Clazz getClazzByName(String name) {
+        return clazzMapper.getClazzByName(name);
+    }
 }
