@@ -32,6 +32,11 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
     @Autowired
     private PermissionService permissionService;
 
+    /**
+     * 权限管理
+     * @param principalCollection
+     * @return
+     */
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo authenticationInfo = new SimpleAuthorizationInfo();
         String name = String.valueOf(principalCollection.getPrimaryPrincipal());
@@ -57,18 +62,37 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
         return authenticationInfo;
     }
 
+    /**
+     * 身份验证
+     * @param authenticationToken
+     * @return
+     * @throws AuthenticationException
+     */
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         String name = String.valueOf(authenticationToken.getPrincipal());
-        final Student student = studentService.getStudentByName(name);
-        if (student == null) {
+        Student student = null;
+        Teacher teacher = null;
+        SimpleAuthenticationInfo authenticationInfo = null;
+        if (((student = studentService.getStudentByName(name)) == null)
+                && ((teacher = teacherService.getTeacherByName(name)) == null)) {
             throw new AuthenticationException("用户名或密码错误");
+        } else if (student != null) {
+            authenticationInfo = new SimpleAuthenticationInfo(
+                    student.getName(),
+                    student.getPassword(),
+                    getName()
+            );
+            authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(student.getCredentialSalt()));
+        } else if (teacher != null) {
+            authenticationInfo = new SimpleAuthenticationInfo(
+                    teacher.getName(),
+                    teacher.getPassword(),
+                    getName()
+            );
+            authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(teacher.getCredentialSalt()));
+        } else {
+            return null;
         }
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                student.getName(),
-                student.getPassword(),
-                getName()
-        );
-        authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(student.getCredentialSalt()));
         return authenticationInfo;
     }
 

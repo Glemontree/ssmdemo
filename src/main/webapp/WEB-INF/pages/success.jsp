@@ -23,5 +23,11 @@
     <br><br>
     <a href="user/add">user add</a>
     <br><br>
+    <a href="jsonTest">Json Test</a>
+    <br><br>
+    <a href="getStudentByName?name=zhangsan">getStudentByName</a>
+    <br><br>
+    <a href="getAllStudentsByClazzName?clazzName=class 1">getAllStudentsByClazzName</a>
+    <br><br>
 </body>
 </html>

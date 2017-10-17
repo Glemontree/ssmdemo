@@ -1,9 +1,11 @@
 package com.glemontree.mybatis.bean;
 
+import com.glemontree.mybatis.base.BasePage;
+
 /**
  * 角色
  */
-public class Role {
+public class Role extends BasePage {
     private int id;
 
     /**

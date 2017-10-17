@@ -1,14 +1,13 @@
 package com.glemontree.mybatis.dao;
 
+import com.glemontree.mybatis.base.BaseMapper;
 import com.glemontree.mybatis.bean.Role;
 
 import java.util.List;
 
-public interface RoleMapper {
+public interface RoleMapper extends BaseMapper<Role> {
 
     public int deleteById(Integer id);
-
-    public int insert(Role role);
 
     public Role selectById(Integer id);
 

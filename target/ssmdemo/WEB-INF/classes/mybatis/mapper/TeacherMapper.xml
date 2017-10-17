@@ -4,16 +4,48 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.glemontree.mybatis.dao.TeacherMapper">
 	
-	<select id="getTeacherByName" resultType="com.glemontree.mybatis.bean.Teacher">
+	<resultMap id="teacherResultMap" type="com.glemontree.mybatis.bean.Teacher">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="password" property="password"/>
+		<result column="salt" property="salt"/>
+		<result column="sex" property="sex"/>
+		<result column="job_no" property="jobNo"/>
+		<result column="title" property="title"/>
+		<!--
+			使用collection标签进行分步查询
+			首先根据id或name查询得到teacher，然后根据查询到的id列进行级联查询
+		-->
+		<collection property="classes"
+					select="com.glemontree.mybatis.dao.ClazzMapper.getClazzesByTeacherId"
+					column="id">
+		</collection>
+	</resultMap>
+	
+	<!--
+		根据teacher name 进行查询
+	-->
+	<select id="getTeacherByName" resultMap="teacherResultMap">
 		SELECT * FROM  teacher WHERE name LIKE #{name}
 	</select>
 	
+	<!--
+		根据teacher id 进行查询
+	-->
+	<select id="getTeacherById" resultMap="teacherResultMap">
+		SELECT * FROM teacher WHERE id = #{id}
+	</select>
+	
+	<!--
+		插入一条Teacher记录到数据库中
+	-->
 	<insert id="insert" parameterType="com.glemontree.mybatis.bean.Teacher">
-		INSERT into teacher (id, name, password, sex, job_no, title)
+		INSERT into teacher (id, name, password, salt, sex, job_no, title)
 		VALUES (
 			#{id},
 			#{name},
 			#{password},
+			#{salt},
 			#{sex},
 			#{jobNo},
 			#{title}

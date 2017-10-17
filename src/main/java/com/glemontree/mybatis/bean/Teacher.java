@@ -3,6 +3,7 @@ package com.glemontree.mybatis.bean;
 import java.util.List;
 
 public class Teacher extends User {
+
     private String sex;
     private String jobNo;
     private String title;

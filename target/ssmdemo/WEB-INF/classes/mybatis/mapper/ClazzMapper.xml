@@ -4,12 +4,54 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.glemontree.mybatis.dao.ClazzMapper">
 	
-	<select id="getClazzById" resultType="com.glemontree.mybatis.bean.Clazz">
+	<!--
+		使用association标签和collection标签进行分步查询
+		首先根据id或name查询得到clazz，然后根据查询到的teacher_id列和id列分别进行级联查询
+	-->
+	<resultMap id="clazzResultMap" type="com.glemontree.mybatis.bean.Clazz">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<association property="teacher"
+		             select="com.glemontree.mybatis.dao.TeacherMapper.getTeacherById"
+		             column="teacher_id">
+		</association>
+		<collection property="students"
+		            select="com.glemontree.mybatis.dao.StudentMapper.getStudentsByClazzId"
+					column="id">
+		</collection>
+	</resultMap>
+	
+	<!--
+		根据clazz Id进行查询
+	-->
+	<select id="getClazzById" resultMap="clazzResultMap">
 		SELECT * FROM clazz WHERE id = #{id}
 	</select>
 	
-	<select id="getClazzByName" resultType="com.glemontree.mybatis.bean.Clazz">
+	<!--
+		根据clazz name进行查询
+	-->
+	<select id="getClazzByName" resultMap="clazzResultMap">
 		SELECT * FROM clazz WHERE name = #{name}
 	</select>
+	
+	<!--
+		根据teacherId查询得到所有的Clazz
+	-->
+	<select id="getClazzesByTeacherId" resultType="com.glemontree.mybatis.bean.Clazz">
+		SELECT * FROM clazz WHERE id = #{teacherId}
+	</select>
+	
+	<!--
+		将clazz插入到数据库中
+	-->
+	<insert id="insert" parameterType="com.glemontree.mybatis.bean.Clazz">
+		INSERT INTO clazz (id, name, teacher_id)
+		VALUES (
+			#{id},
+			#{name},
+			#{teacher.id}
+		)
+	</insert>
 	
 </mapper>

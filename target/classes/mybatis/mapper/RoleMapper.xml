@@ -4,10 +4,59 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.glemontree.mybatis.dao.RoleMapper">
 	
+	<resultMap id="roleResultMap" type="com.glemontree.mybatis.bean.Role">
+		<id column="id" property="id"/>
+		<result column="role_name" property="roleName"/>
+		<result column="role_sign" property="roleSign"/>
+		<result column="description" property="description"/>
+	</resultMap>
+	
+	<!--
+		select roles by student id
+		left join
+	-->
+	<select id="selectRolesByStudentId" resultMap="roleResultMap">
+		SELECT r.* FROM role r LEFT JOIN student_role sr ON r.id = sr.role_id
+		WHERE sr.student_id = #{id}
+	</select>
+	
+	<!--
+		select roles by teacher id
+		left join
+	-->
+	<select id="selectRolesByTeacherId" resultMap="roleResultMap">
+		SELECT r.* FROM role r LEFT JOIN teacher_role tr ON r.id = tr.role_id
+		WHERE tr.teacher_id = #{id}
+	</select>
+	
+	<!--
+		select role by role id
+	-->
+	<select id="selectById" resultMap="roleResultMap">
+		SELECT * FROM role WHERE id = #{id}
+	</select>
+	
+	<!--
+		update role by id
+	-->
+	<update id="updateById" parameterType="com.glemontree.mybatis.bean.Role">
+		UPDATE role
+		SET role_name = #{roleName},
+		role_sign = #{role_sign},
+		description = #{description}
+		WHERE id = #{id}
+	</update>
+	
+	<!--
+		delete role by id
+	-->
 	<delete id="deleteById" parameterType="java.lang.Integer">
 		DELETE FROM role WHERE id = #{id}
 	</delete>
 	
+	<!--
+		insert a new role into the database
+	-->
 	<insert id="insert" parameterType="com.glemontree.mybatis.bean.Role">
 		INSERT INTO role (id, role_name, role_sign, description)
 		VALUES (
@@ -17,27 +66,5 @@
 			#{description}
 		)
 	</insert>
-	
-	<select id="selectById" resultType="com.glemontree.mybatis.bean.Role">
-		SELECT * FROM role WHERE id = #{id}
-	</select>
-	
-	<update id="updateById" parameterType="com.glemontree.mybatis.bean.Role">
-		UPDATE role
-		SET role_name = #{roleName},
-			role_sign = #{role_sign},
-			description = #{description}
-		WHERE id = #{id}
-	</update>
-	
-	<select id="selectRolesByStudentId" resultType="com.glemontree.mybatis.bean.Role">
-		SELECT r.* FROM role r LEFT JOIN student_role sr ON r.id = sr.role_id
-		WHERE sr.student_id = #{id}
-	</select>
-	
-	<select id="selectRolesByTeacherId" resultType="com.glemontree.mybatis.bean.Role">
-		SELECT r.* FROM role r LEFT JOIN teacher_role tr ON r.id = tr.role_id
-		WHERE tr.teacher_id = #{id}
-	</select>
 	
 </mapper>

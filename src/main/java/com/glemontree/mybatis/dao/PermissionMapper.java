@@ -1,14 +1,13 @@
 package com.glemontree.mybatis.dao;
 
+import com.glemontree.mybatis.base.BaseMapper;
 import com.glemontree.mybatis.bean.Permission;
 
 import java.util.List;
 
-public interface PermissionMapper {
+public interface PermissionMapper extends BaseMapper<Permission> {
 
     public int deleteById(Integer id);
-
-    public int insert(Permission permission);
 
     public Permission selectById(Integer id);
 

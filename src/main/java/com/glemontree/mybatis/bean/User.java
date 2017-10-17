@@ -1,21 +1,34 @@
 package com.glemontree.mybatis.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.glemontree.mybatis.base.BasePage;
+
 public class User {
 
+    /**
+     * 主键
+     */
     protected Integer id;
+
+    /**
+     * 姓名
+     */
     protected String name;
+
+    /**
+     * 密码
+     */
     protected String password;
+
+    /**
+     * 盐值
+     */
     protected String salt;
+
+    /**
+     * 是否锁定
+     */
     protected Boolean locked = Boolean.FALSE;
-
-    public User() {
-
-    }
-
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
-    }
 
     public String getName() {
         return name;
@@ -25,6 +38,7 @@ public class User {
         this.name = name;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -41,6 +55,7 @@ public class User {
         this.id = id;
     }
 
+    @JsonIgnore
     public String getSalt() {
         return salt;
     }
@@ -49,6 +64,7 @@ public class User {
         this.salt = salt;
     }
 
+    @JsonIgnore
     public Boolean getLocked() {
         return locked;
     }
@@ -57,8 +73,18 @@ public class User {
         this.locked = locked;
     }
 
+    @JsonIgnore
     public String getCredentialSalt() {
         return name + salt;
+    }
+
+    public User() {
+
+    }
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
     }
 
     @Override
@@ -79,5 +105,16 @@ public class User {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", locked=" + locked +
+                '}';
     }
 }

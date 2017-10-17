@@ -1,6 +1,7 @@
 package com.glemontree.mybatis.bean;
 
 public class SelectCourse {
+
     private Integer id;
     private Student student;
     private String courseName;

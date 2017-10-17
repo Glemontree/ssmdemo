@@ -4,25 +4,47 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.glemontree.mybatis.dao.StudentMapper">
 	
-	<!--<resultMap id="baseResultMap" type="com.glemontree.mybatis.bean.Student">
+	<resultMap id="studentResultMap" type="com.glemontree.mybatis.bean.Student">
 		<id column="id" property="id"/>
 		<result column="name" property="name"/>
 		<result column="password" property="password"/>
+		<result column="salt" property="salt"/>
 		<result column="sex" property="sex"/>
 		<result column="student_id" property="studentId"/>
-		<association property="clazz" javaType="com.glemontree.mybatis.bean.Clazz">
-			<id
+		<!--
+			使用association标签进行分步查询，
+			首先根据Id或name查询得到student，再根据clazz_id列去查询clazz
+		-->
+		<association property="clazz"
+		             select="com.glemontree.mybatis.dao.ClazzMapper.getClazzById"
+		             column="clazz_id">
 		</association>
-	</resultMap>-->
+	</resultMap>
 	
-	<select id="getStudentById" resultType="com.glemontree.mybatis.bean.Student">
+	<!--
+		根据Id查询Student
+	-->
+	<select id="getStudentById" resultMap="studentResultMap">
 		select * from student where id = #{id}
 	</select>
 	
-	<select id="getStudentByName" resultType="com.glemontree.mybatis.bean.Student">
+	<!--
+		根据name查询Student
+	-->
+	<select id="getStudentByName" resultMap="studentResultMap">
 		SELECT * FROM  student WHERE name LIKE #{name}
 	</select>
 	
+	<!--
+		根据Clazz Id查询班级所有学生
+	-->
+	<select id="getStudentsByClazzId" resultType="com.glemontree.mybatis.bean.Student">
+		SELECT * FROM student WHERE clazz_id = #{clazzId}
+	</select>
+	
+	<!--
+		将一条Student记录插入到数据库中
+	-->
 	<insert id="insert" parameterType="com.glemontree.mybatis.bean.Student">
 		INSERT into student (id, name, password, salt, sex, student_id, clazz_id)
 		VALUES (
@@ -36,11 +58,4 @@
 		)
 	</insert>
 	
-	<select id="authentication" resultType="com.glemontree.mybatis.bean.Student">
-		SELECT * FROM student WHERE name = #{name} AND password = #{password}
-	</select>
-	
-	<select id="getRoles" parameterType="String" resultType="String">
-		SELECT r.role_name from student s, role r WHERE s.
-	</select>
 </mapper>

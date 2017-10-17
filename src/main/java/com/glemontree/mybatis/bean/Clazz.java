@@ -1,8 +1,10 @@
 package com.glemontree.mybatis.bean;
 
+import com.glemontree.mybatis.base.BasePage;
+
 import java.util.List;
 
-public class Clazz {
+public class Clazz /*extends BasePage*/ {
     /**
      * id
      */
@@ -18,6 +20,11 @@ public class Clazz {
      */
     private List<Student> students;
 
+    /**
+     * 班主任
+     */
+    private Teacher teacher;
+
     public Teacher getTeacher() {
         return teacher;
     }
@@ -25,11 +32,6 @@ public class Clazz {
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
-
-    /**
-     * 班主任
-     */
-    private Teacher teacher;
 
     public Integer getId() {
         return id;
@@ -61,6 +63,7 @@ public class Clazz {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", students=" + students +
+                ", teacher=" + teacher +
                 '}';
     }
 

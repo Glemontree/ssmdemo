@@ -2,13 +2,10 @@ package com.glemontree.mybatis.service;
 
 import com.glemontree.mybatis.bean.Student;
 import com.glemontree.mybatis.dao.StudentMapper;
-import com.glemontree.mybatis.utils.Utils;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 @Service
 public class StudentService {

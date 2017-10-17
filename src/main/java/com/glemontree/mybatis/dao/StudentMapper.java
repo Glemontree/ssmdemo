@@ -1,11 +1,12 @@
 package com.glemontree.mybatis.dao;
 
+import com.glemontree.mybatis.base.BaseMapper;
 import com.glemontree.mybatis.bean.Clazz;
 import com.glemontree.mybatis.bean.Student;
 
 import java.util.List;
 
-public interface StudentMapper {
+public interface StudentMapper extends BaseMapper<Student> {
 	
     public Student getStudentById(Integer id);
     
@@ -15,8 +16,6 @@ public interface StudentMapper {
     
     public List<Student> getStudentsByClazz(Clazz clazz);
 
-    public void insert(Student student);
+    public List<Student> getStudentsByClazzId(Integer clazzId);
 
-    public Student authentication(Student student);
-    
 }

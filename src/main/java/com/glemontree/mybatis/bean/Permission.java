@@ -1,9 +1,11 @@
 package com.glemontree.mybatis.bean;
 
+import com.glemontree.mybatis.base.BasePage;
+
 /**
  * 权限
  */
-public class Permission {
+public class Permission extends BasePage {
 
     private Integer id;
 

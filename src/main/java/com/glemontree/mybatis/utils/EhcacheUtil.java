@@ -8,6 +8,7 @@ import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
 
 public final class EhcacheUtil {
+
     private static final CacheManager cacheManager = CacheManager.getInstance();
     /**
      * 创建ehcache缓存，创建之后的有效期是1小时
@@ -16,6 +17,7 @@ public final class EhcacheUtil {
             "systemCache", 5000)
             .memoryStoreEvictionPolicy(MemoryStoreEvictionPolicy.FIFO)
             .timeoutMillis(300).timeToLiveSeconds(60 * 60));
+
     static {
         cacheManager.addCache(cache);
     }
